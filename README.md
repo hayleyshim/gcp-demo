@@ -6,4 +6,6 @@ terraform plan -var-file setting.tfvars
 terraform apply -var-file setting.tfvars
 </code></pre>
 
+<p> If you have any problems, let me know the issues in <plz :) </b>
+
 <img src="https://github.com/hayleyshim/gcp-demo/blob/main/demo_architecture.PNG?raw=true">
