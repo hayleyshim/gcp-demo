@@ -20,18 +20,6 @@ module "network" {
   auto_create_subnetworks = "false"
 }
 
-/*
-# creating the public subnet
-module "public_subnet" {
-  source = "./modules/subnetworks"
-
-  subnetwork_name = "public-subnetwork"
-  cidr = "10.10.10.0/24"
-  subnetwork_region = "asia-northeast3"
-  network = module.network.network_name
-  depends_on_resoures = [module.network]
-  private_ip_google_access = "false"
-}*/
 
 # creating the private subnet - server
 module "private_subnet" {
@@ -44,19 +32,6 @@ module "private_subnet" {
   depends_on_resoures = [module.network]
   private_ip_google_access = "false"
 }
-
-/*
-# creating the private subnet - db
-module "private_subnet2" {
-  source = "./modules/subnetworks"
-
-  subnetwork_name = "private-subnetwork2"
-  cidr = "10.10.30.0/24"
-  subnetwork_region = "asia-northeast3"
-  network = module.network.network_name
-  depends_on_resoures = [module.network]
-  private_ip_google_access = "false"
-}*/
 
 
 
@@ -73,68 +48,9 @@ module "firewall_rule_ssh_all" {
   target_tags = null
 }
 
-/*# create firewall rule to access only the public vm with icmp
-module "firewall_rule_icmp_public" {
-  source = "./modules/firewall"
-
-  firewall_rule_name = "access-vm"
-  network = module.network.network_name
-  protocol_type = "icmp"
-  ports_types = null
-  source_tags = null
-  source_ranges = ["0.0.0.0/0"]
-  target_tags = ["ncu-vm","ncu-analysis-vm" ]
-}*/
-
-/*# firwall rule for private instances
-module "firewall_rule_private_vm" {
-  source = "./modules/firewall"
-
-  firewall_rule_name = "private-vm"
-  network = module.network.network_name
-  protocol_type = "icmp"
-  ports_types = null
-  source_tags = null
-  source_ranges = ["0.0.0.0/0"]
-  target_tags = ["ncu-vm"]
-}*/
-
-# firwall rule for private instances
-module "firewall_rule_private_vm2" {
-  source = "./modules/firewall"
-
-  firewall_rule_name = "private-vm-from-ncu"
-  network = module.network.network_name
-  protocol_type = "icmp"
-  ports_types = null
-  source_tags = ["ncu-vm"]
-  source_ranges = null
-  target_tags = ["ncu-analysis-vm"]
-}
-
-/*
-# create the vm in public subnet
-module "public_instance" {
-  source = "./modules/instance"
-
-  instance_name = "bastion"
-  machine_type = "f1-micro"
-  vm_zone = "asia-northeast3-a"
-  network_tags = ["bastion", "test"]
-  machine_image = "ubuntu-1804-bionic-v20200317"
-  subnetwork = module.public_subnet.sub_network_name
-  metadata_Name_value = "public_vm"
-  
-}*/
-
-/*module "bastion-host" {
-  source  = "terraform-google-modules/bastion-host/google"
-  version = "4.1.0"
-  # insert the 4 required variables here
-}*/
 
 
-/*
+
 # create the vm in public subnet
 module "private_instance" {
   source = "./modules/instance"
@@ -148,56 +64,7 @@ module "private_instance" {
   metadata_Name_value = "private_vm"
 
 }
-*/
 
-
-
-# create the vm in public subnet - 추가(vm)
-module "private_instance2" {
-  source = "./modules/instance"
-
-  instance_name = "ncu-vm"
-  machine_type = "f1-micro"
-  vm_zone = "asia-northeast3-a"
-  network_tags = ["ncu-vm", "test"]
-  machine_image = "ubuntu-1804-bionic-v20200317"
-  //subnetwork = module.private_subnet.sub_network_name
-
-  //network    = module.network.self_link
-  subnetwork = module.private_subnet.self_link
-  metadata_Name_value = "private_vm"
-  
-}
-
-# create the vm in public subnet - 추가(vm)
-module "private_instance3" {
-  source = "./modules/instance"
-
-  instance_name = "ncu-analysis-vm"
-  machine_type = "f1-micro"
-  vm_zone = "asia-northeast3-a"
-  network_tags = ["ncu-analysis-vm", "test"]
-  machine_image = "ubuntu-1804-bionic-v20200317"
-  //subnetwork = module.private_subnet.sub_network_name
-  
-  //network    = module.network.self_link
-  subnetwork = module.private_subnet.self_link
-  metadata_Name_value = "private_vm"
-}
-
-/*
-# create the vm in public subnet - 추가(vm-db)
-module "private_vm_db" {
-  source = "./modules/instance"
-
-  instance_name = "db"
-  machine_type = "f1-micro"
-  vm_zone = "asia-northeast3-c"
-  network_tags = ["db", "test"]
-  machine_image = "ubuntu-1804-bionic-v20200317"
-  subnetwork = module.private_subnet2.sub_network_name
-  metadata_Name_value = "private_vm"
-}*/
 
 
 module "instance-templates" {
@@ -313,16 +180,3 @@ module "cloudsql-rr" {
   }
 }
 
-
-/*module "vpn" {
-  source = "./modules/vpn"
-
-  classic_vpn_ext_gateway_ip = var.classic_vpn_ext_gateway_ip
-  //billing_account_id = var.billing_account_id
-  //classic_vpn_folder_id = var.classic_vpn_folder_id
-  classic_vpn_shared_secret = var.classic_vpn_shared_secret
-  classic_vpn_router_interface_ip_range = var.classic_vpn_router_interface_ip_range
-  classic_vpn_router_peer_ip_address = var.classic_vpn_router_peer_ip_address
-  //prefix = var.prefix
-
-}*/
