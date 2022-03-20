@@ -7,5 +7,6 @@ terraform apply -var-file setting.tfvars
 </code></pre>
 
 <p> If you have any problems, let me know the issues in <a href="https://github.com/hayleyshim/gcp-demo/issues"> here </a> plz :) </b>
-<
+<br>
+
 <img src="https://github.com/hayleyshim/gcp-demo/blob/main/demo_architecture.PNG?raw=true">
