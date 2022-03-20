@@ -65,34 +65,3 @@ variable "instance_name" {
   type    = string
   default = "vpn-test"
 } 
-
-variable "classic_vpn_ext_gateway_ip" {
-   type    = string
-   default = "10.10.10.1/32"
-}
-
-variable "classic_vpn_shared_secret" {
-   type    = string
-   default = "K0p1Cl0ud"
-}
-
-variable "classic_vpn_router_interface_ip_range" {
-   type    = string
-   default = "169.254.2.1/30"
-}
-
-variable "classic_vpn_router_peer_ip_address" {
-   type    = string
-   default = "169.254.2.2"
-}
-
-/*
-variable "billing_account_id" {
-    type    = string
-
-}
-
-variable "classic_vpn_folder_id" {
-    type    = string
-
-}*/
