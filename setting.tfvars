@@ -1,4 +1,4 @@
-project       = "vm-test-341412"
+project       = "[project ID]"
 name          = "lb-poc"
 backend-port  = "80"
 frontend-port = "80"
